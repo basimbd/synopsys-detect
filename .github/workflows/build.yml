@@ -34,7 +34,5 @@ jobs:
 
       - name: Build and run battery, unit, and functional tests
         run: |
-          PR_NUMBER="${{github.event.number}}-SNAPSHOT"
-          VERSION="${PR_NUMBER}-SNAPSHOT"
           cd D:\synopsys-detect\
           ./gradlew clean build -Ptags="battery,unit,functional" artifactoryPublish -Pversion=${VERSION}
