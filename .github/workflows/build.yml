@@ -35,5 +35,4 @@ jobs:
       - name: Build and run battery, unit, and functional tests
         run: |
           cd D:\synopsys-detect\
-          echo "Starting Gradle"
           ./gradlew clean build -Ptags="battery,unit,functional" -Pversion="${{github.event.number}}-SNAPSHOT"

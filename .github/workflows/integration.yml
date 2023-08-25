@@ -27,4 +27,4 @@ jobs:
       #           java-version: '11'
       #           distribution: 'temurin'
       - name: echo success build
-        run: echo "build successfully"
+        run: echo "Build Successfully"
