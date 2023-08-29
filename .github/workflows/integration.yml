@@ -1,4 +1,4 @@
-name: Post Merge Actions
+name: Integration Tests
 
 on:
   workflow_call:
