@@ -32,7 +32,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Build and run battery, unit and functional tests
+      - name: Build and run battery, unit, and functional tests
         run: |
           cd D:\synopsys-detect\
           ./gradlew clean build -Ptags="battery,unit,functional" -Pversion="${{github.event.number}}-SNAPSHOT" artifactoryPublish
