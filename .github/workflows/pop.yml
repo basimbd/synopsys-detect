@@ -1,0 +1,35 @@
+name: Post-merge workflow
+
+on:
+  push:
+    branches:
+      - master
+      - '[0-9]+.[0-9]+.z'
+      - '[0-9]+.[0-9]+.0'
+
+permissions:
+  contents: read
+
+jobs:
+  pop:
+    runs-on: self-hosted
+
+    steps:
+        # Setting up JDK 11 could be time-consuming for self-hosted runner
+        # depending on the internet speed of the machine
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - uses: actions/checkout@v3
+
+      - name: DETECT_PROJECT_VERSION_NAME_OVERRIDE
+        run: |
+          $DETECT_PROJECT_VERSION_NAME_OVERRIDE = '9.1.0'
+      
+      - name: Detect
+        run: |
+          cd \\wsl.localhost\Ubuntu-20.04\home\basim\synopsys-detect
+          & bash pop.sh
