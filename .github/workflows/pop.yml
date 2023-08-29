@@ -31,9 +31,9 @@ jobs:
       
       - name: Detect
         run: |
-          echo pwd
+          pwd
           wsl
-          echo pwd
+          pwd
           cd /home/basim/synopsys-detect
           ./pop.sh
           exit
