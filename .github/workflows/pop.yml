@@ -31,5 +31,7 @@ jobs:
       
       - name: Detect
         run: |
-          cd \\wsl.localhost\Ubuntu-20.04\home\basim\synopsys-detect
-          & bash pop.sh
+          wsl
+          cd /home/basim/synopsys-detect
+          ./pop.sh
+          exit
