@@ -32,5 +32,5 @@ jobs:
       - name: Detect
         run: |
           pushd \\wsl.localhost\Ubuntu-20.04\home\basim\synopsys-detect
-          pop.sh
+          bash pop.sh
           popd
