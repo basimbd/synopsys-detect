@@ -31,9 +31,6 @@ jobs:
       
       - name: Detect
         run: |
-          pwd
-          wsl
-          pwd
-          cd /home/basim/synopsys-detect
-          ./pop.sh
-          exit
+          pushd \\wsl.localhost\Ubuntu-20.04\home\basim\synopsys-detect
+          pop.sh
+          popd
