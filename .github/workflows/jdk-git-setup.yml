@@ -1,0 +1,23 @@
+name: Jdk and Git setup
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  setup-jdk:
+    runs-on: self-hosted
+    steps:
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+  git-setup:
+    runs-on: self-hosted
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
