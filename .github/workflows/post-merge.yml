@@ -1,0 +1,16 @@
+name: Post Merge Workflow
+
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  jdk-git-setup:
+    uses: .github/workflows/jdk-git-setup.yml
+  pop:
+    uses: .github/workflows/pop.yml
+  integration:
+    uses: .github/workflows/integration.yml
