@@ -9,8 +9,17 @@ permissions:
 
 jobs:
   jdk-git-setup:
-    uses: ./.github/workflows/sub-workflows/integration.yml
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/integration.yml
   pop:
-    uses: ./.github/workflows/sub-workflows/pop.yml
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pop.yml
   integration:
-    uses: ./.github/workflows/sub-workflows/integration.yml
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/integration.yml
