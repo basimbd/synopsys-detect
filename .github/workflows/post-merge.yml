@@ -9,8 +9,8 @@ permissions:
 
 jobs:
   jdk-git-setup:
-    uses: ./.github/workflows/jdk-git-setup.yml
+    uses: ./.github/actions/jdk-git-setup.yml
   pop:
-    uses: ./.github/workflows/pop.yml
+    uses: ./.github/actions/pop.yml
   integration:
-    uses: ./.github/workflows/integration.yml
+    uses: ./.github/actions/integration.yml
