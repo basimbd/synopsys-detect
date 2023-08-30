@@ -15,12 +15,14 @@ jobs:
       - uses: ./.github/actions/setup
 
   integration:
+    needs: setup
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/integration
 
   pop:
+    needs: setup
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
