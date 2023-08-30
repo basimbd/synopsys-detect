@@ -1,0 +1,9 @@
+rootProject.name = 'synopsys-detect'
+
+include 'detectable'
+include 'detector'
+include 'configuration'
+include 'common'
+include 'common-test'
+include 'documentation'
+
