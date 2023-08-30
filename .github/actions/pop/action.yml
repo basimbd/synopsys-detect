@@ -1,0 +1,16 @@
+name: 'Pop Scan'
+description: 'Runs the SCA scan in the repository.'
+runs:
+  using: composite
+  steps:
+    - name: DETECT_PROJECT_VERSION_NAME_OVERRIDE
+      shell: powershell
+      run: |
+        $DETECT_PROJECT_VERSION_NAME_OVERRIDE = '9.1.0'
+
+    - name: Detect
+      shell: powershell
+      run: |
+        pushd \\wsl.localhost\Ubuntu-20.04\home\basim\synopsys-detect
+        bash pop.sh
+        popd

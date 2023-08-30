@@ -1,0 +1,8 @@
+name: 'Integration Tests'
+description: 'Runs the Integration Tests in the repository.'
+runs:
+  using: composite
+  steps:
+    - name: Integration Tests with Gradle
+      shell: powershell
+      run: ./gradlew clean build -Ptags=integration
