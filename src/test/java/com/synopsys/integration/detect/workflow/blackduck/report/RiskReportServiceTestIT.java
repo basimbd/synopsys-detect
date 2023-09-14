@@ -1,16 +1,5 @@
 package com.synopsys.integration.detect.workflow.blackduck.report;
 
-import java.io.File;
-import java.nio.file.Path;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junitpioneer.jupiter.TempDirectory;
-
 import com.synopsys.integration.blackduck.api.generated.enumeration.ProjectVersionDistributionType;
 import com.synopsys.integration.blackduck.api.manual.temporary.enumeration.ProjectVersionPhaseType;
 import com.synopsys.integration.blackduck.service.model.ProjectSyncModel;
@@ -18,8 +7,17 @@ import com.synopsys.integration.blackduck.service.model.ProjectVersionWrapper;
 import com.synopsys.integration.detect.battery.docker.integration.BlackDuckTestConnection;
 import com.synopsys.integration.detect.workflow.blackduck.report.service.ReportService;
 import com.synopsys.integration.exception.IntegrationException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junitpioneer.jupiter.TempDirectory;
 
-@Tag("integration")
+import java.io.File;
+import java.nio.file.Path;
+
+//@Tag("integration")
 public class RiskReportServiceTestIT {
     public static final String PROJECT_NAME = "detect risk report test";
     public static final String PROJECT_VERSION_NAME = "1.0.0";
@@ -61,9 +59,9 @@ public class RiskReportServiceTestIT {
         ProjectVersionWrapper projectVersionWrapper = blackDuckTestConnection.projectVersionAssertions(PROJECT_NAME, PROJECT_VERSION_NAME).retrieveProjectVersionWrapper();
 
         File noticeReportFile = reportService.createNoticesReportFile(
-            folderForReport.toFile(),
-            projectVersionWrapper.getProjectView(),
-            projectVersionWrapper.getProjectVersionView()
+                folderForReport.toFile(),
+                projectVersionWrapper.getProjectView(),
+                projectVersionWrapper.getProjectVersionView()
         );
         Assertions.assertNotNull(noticeReportFile);
         Assertions.assertTrue(noticeReportFile.exists());

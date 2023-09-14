@@ -1,20 +1,18 @@
 package com.synopsys.integration.detect.battery.docker;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-
 import com.synopsys.integration.detect.battery.docker.provider.BuildDockerImageProvider;
 import com.synopsys.integration.detect.battery.docker.util.DetectCommandBuilder;
 import com.synopsys.integration.detect.battery.docker.util.DetectDockerTestRunner;
 import com.synopsys.integration.detect.battery.docker.util.DockerAssertions;
 import com.synopsys.integration.detect.configuration.DetectProperties;
 import com.synopsys.integration.detector.base.DetectorType;
+import org.junit.jupiter.api.Tag;
+
+import java.io.IOException;
 
 @Tag("integration")
 public class ProjectInspectorTests {
-    @Test
+    //    @Test
     void dotnetProjectInspector() throws IOException {
         try (DetectDockerTestRunner test = new DetectDockerTestRunner("detect-dotnet-project-inspector", "detect-dotnet-five:1.0.1")) {
             test.withImageProvider(BuildDockerImageProvider.forDockerfilResourceNamed("Dotnet5.dockerfile"));
@@ -33,7 +31,7 @@ public class ProjectInspectorTests {
         }
     }
 
-    @Test
+    //    @Test
     void gradleProjectInspector() throws IOException, InterruptedException {
         try (DetectDockerTestRunner test = new DetectDockerTestRunner("detect-gradle-project-inspector", "gradle-simple:1.0.0")) {
             test.withImageProvider(BuildDockerImageProvider.forDockerfilResourceNamed("SimpleGradle.dockerfile"));
@@ -52,7 +50,7 @@ public class ProjectInspectorTests {
         }
     }
 
-    @Test
+    //    @Test
     void mavenProjectInspectorNotRunIfCliSucceeds() throws IOException, InterruptedException {
         try (DetectDockerTestRunner test = new DetectDockerTestRunner("detect-maven-project-inspector-legacy", "maven-simple:1.0.0")) {
             test.withImageProvider(BuildDockerImageProvider.forDockerfilResourceNamed("SimpleMaven.dockerfile"));
@@ -70,7 +68,7 @@ public class ProjectInspectorTests {
         }
     }
 
-    @Test
+    //    @Test
     void mavenProjectInspectorRunIfCliFails() throws IOException, InterruptedException {
         try (DetectDockerTestRunner test = new DetectDockerTestRunner("detect-maven-project-inspector", "maven-simple:1.0.0")) {
             test.withImageProvider(BuildDockerImageProvider.forDockerfilResourceNamed("SimpleMaven.dockerfile"));

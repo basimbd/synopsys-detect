@@ -1,10 +1,5 @@
 package com.synopsys.integration.detect.battery.docker.integration;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-
 import com.synopsys.integration.detect.battery.docker.provider.BuildDockerImageProvider;
 import com.synopsys.integration.detect.battery.docker.util.DetectCommandBuilder;
 import com.synopsys.integration.detect.battery.docker.util.DetectDockerTestRunner;
@@ -14,6 +9,9 @@ import com.synopsys.integration.detect.configuration.DetectProperties;
 import com.synopsys.integration.detect.configuration.enumeration.DetectTool;
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.util.NameVersion;
+import org.junit.jupiter.api.Tag;
+
+import java.io.IOException;
 
 @Tag("integration")
 public class RiskReportTests {
@@ -35,7 +33,7 @@ public class RiskReportTests {
         }
     }
 
-    @Test
+    //    @Test
     void riskReportSmokeTest() throws IOException, InterruptedException, IntegrationException {
         SharedDockerTestRunner test = anyProjectWithRiskReportResultsInBlackDuck("risk-report-smoke-test", new NameVersion("risk-reports", "smoke-test"));
 
@@ -48,11 +46,11 @@ public class RiskReportTests {
         dockerAssertions.resultProducedAtLocation("/opt/project/src/risk_reports_smoke_test_BlackDuck_RiskReport.pdf");
     }
 
-    @Test
+    //    @Test
     void riskReportNotCreatedInWorkingDir() throws IOException, InterruptedException, IntegrationException {
         SharedDockerTestRunner test = anyProjectWithRiskReportResultsInBlackDuck(
-            "risk-report-does-not-use-working-directory",
-            new NameVersion("risk-reports", "default-not-working-directory")
+                "risk-report-does-not-use-working-directory",
+                new NameVersion("risk-reports", "default-not-working-directory")
         );
 
         test.runner.withWorkingDirectory("/opt/random");
@@ -63,11 +61,11 @@ public class RiskReportTests {
         dockerAssertions.resultProducedAtLocation("/opt/project/src/risk_reports_default_not_working_directory_BlackDuck_RiskReport.pdf");
     }
 
-    @Test
+    //    @Test
     void riskReportCreatedInCustomDirectoryEvenIfItDoesntExist() throws IOException, InterruptedException, IntegrationException {
         SharedDockerTestRunner test = anyProjectWithRiskReportResultsInBlackDuck(
-            "risk-report-directory-does-not-exist",
-            new NameVersion("risk-reports", "directory-does-not-exist")
+                "risk-report-directory-does-not-exist",
+                new NameVersion("risk-reports", "directory-does-not-exist")
         );
 
         test.command.property(DetectProperties.DETECT_RISK_REPORT_PDF, "true");

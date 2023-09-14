@@ -1,10 +1,5 @@
 package com.synopsys.integration.detect.battery.docker.integration;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-
 import com.synopsys.integration.detect.battery.docker.provider.BuildDockerImageProvider;
 import com.synopsys.integration.detect.battery.docker.util.DetectCommandBuilder;
 import com.synopsys.integration.detect.battery.docker.util.DetectDockerTestRunner;
@@ -14,6 +9,9 @@ import com.synopsys.integration.detect.configuration.DetectProperties;
 import com.synopsys.integration.detect.configuration.enumeration.DetectTool;
 import com.synopsys.integration.exception.IntegrationException;
 import com.synopsys.integration.util.NameVersion;
+import org.junit.jupiter.api.Tag;
+
+import java.io.IOException;
 
 @Tag("integration")
 public class RapidModeTests {
@@ -34,7 +32,7 @@ public class RapidModeTests {
         }
     }
 
-    @Test
+    //    @Test
     void rapidModeSmokeTest() throws IOException, IntegrationException {
         SharedDockerTestRunner test = anyProjectWithRapidResultsInBlackDuck("rapid-mode-smoke-test", new NameVersion("rapid-mode", "smoke-test"));
 

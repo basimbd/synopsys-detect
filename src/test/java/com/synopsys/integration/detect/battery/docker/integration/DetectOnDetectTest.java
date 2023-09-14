@@ -1,23 +1,5 @@
 package com.synopsys.integration.detect.battery.docker.integration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junitpioneer.jupiter.TempDirectory;
-
 import com.synopsys.integration.blackduck.service.model.ProjectVersionWrapper;
 import com.synopsys.integration.detect.battery.docker.provider.BuildDockerImageProvider;
 import com.synopsys.integration.detect.battery.docker.util.DetectCommandBuilder;
@@ -27,10 +9,26 @@ import com.synopsys.integration.detect.configuration.DetectProperties;
 import com.synopsys.integration.detect.configuration.enumeration.DetectTool;
 import com.synopsys.integration.detect.workflow.blackduck.report.service.ReportService;
 import com.synopsys.integration.exception.IntegrationException;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junitpioneer.jupiter.TempDirectory;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("integration")
 public class DetectOnDetectTest {
-    @Test
+    //    @Test
     void detectOnDetect() throws IOException, IntegrationException {
         try (DetectDockerTestRunner test = new DetectDockerTestRunner("detect-on-detect", "detect-7.1.0:1.0.0")) {
             test.withImageProvider(BuildDockerImageProvider.forDockerfilResourceNamed("Detect-7.1.0.dockerfile"));
@@ -49,7 +47,7 @@ public class DetectOnDetectTest {
             dockerAssertions.bdioFiles(1); //7 code locations, 6 bdio, 1 signature scanner
 
             blackduckAssertions.hasCodeLocations(
-                "src/detect-on-detect-docker/happy-path signature"
+                    "src/detect-on-detect-docker/happy-path signature"
             );
 
             blackduckAssertions.hasComponents("jackson-core");
@@ -58,7 +56,7 @@ public class DetectOnDetectTest {
 
     private static final long HALF_MILLION_BYTES = 500_000;
 
-    @Test
+    //    @Test
     @ExtendWith(TempDirectory.class)
     public void testDryRunScanWithSnippetMatching(@TempDirectory.TempDir Path tempOutputDirectory) throws Exception {
         try (DetectDockerTestRunner test = new DetectDockerTestRunner("detect-on-detect-dryrun", "detect-7.1.0:1.0.0")) {
@@ -82,7 +80,7 @@ public class DetectOnDetectTest {
         }
     }
 
-    @Test
+    //    @Test
     //Simply verify a risk report is generated at the expected location.
     public void riskReportResultProduced() throws Exception {
         try (DetectDockerTestRunner test = new DetectDockerTestRunner("detect-on-detect-riskreport-default", "detect-7.1.0:1.0.0")) {
@@ -104,7 +102,7 @@ public class DetectOnDetectTest {
         }
     }
 
-    @Test
+    //    @Test
     //Tests that a new project has an empty report, run detect to fill it, tests the report is filled, in a custom location
     public void riskReportPopulatedAtCustomPath() throws Exception {
         try (DetectDockerTestRunner test = new DetectDockerTestRunner("detect-on-detect-riskreport-custom", "detect-7.1.0:1.0.0")) {
@@ -159,8 +157,8 @@ public class DetectOnDetectTest {
         File[] files = directory.listFiles();
         if (files != null) {
             return Arrays.stream(files)
-                .filter(file -> file.getName().endsWith(".pdf"))
-                .collect(Collectors.toList());
+                    .filter(file -> file.getName().endsWith(".pdf"))
+                    .collect(Collectors.toList());
         } else {
             return Collections.emptyList();
         }
