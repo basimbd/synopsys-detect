@@ -22,7 +22,7 @@ jobs:
 
       - name: New Version
         run: |
-          ./gradlew properties -q | grep '^version: '
+          ./gradlew properties -q | findstr '^version: '
 
       - uses: EndBug/add-and-commit@v9
         with:
