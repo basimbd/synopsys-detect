@@ -20,11 +20,13 @@ buildscript {
 }
 
 group = 'com.synopsys.integration'
-version = '9.0.0-SIGQA6-SNAPSHOT'
+version = '9.0.0-SIGQA6'
 
 apply plugin: 'com.synopsys.integration.solution'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.artifactory'
 
 final def resources = new File("${projectDir}/src/main/resources")
 final def versionFile = new File(resources, "version.txt")
@@ -48,29 +50,37 @@ def createBatteryPath() {
 def final locatorGroup = "com.synopsys.integration"
 def final locatorModule = "component-locator"
 final def externalRepoHost = "https://sig-repo.synopsys.com"
-final def internalRepoHost = System.getenv('SNPS_INTERNAL_ARTIFACTORY')
+final def internalRepoHost = "http://localhost:8082" //System.getenv('SNPS_INTERNAL_ARTIFACTORY')
+
+println "======================\n${project.property("version")}\n======================"
 
 repositories {
     println "Checking if environment property SNPS_INTERNAL_ARTIFACTORY is configured: ${internalRepoHost}"
+
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integrations-release")
         content { includeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
     }
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integrations-snapshot")
         content { includeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
     }
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integration-placeholder-release")
         content { includeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
     }
     maven {
         url = uri("${externalRepoHost}/artifactory/bds-integration-placeholder-release")
         content { includeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
     }
     maven {
         url "${externalRepoHost}/bds-bdio-release"
         content { excludeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
     }
 }
 
@@ -105,15 +115,28 @@ allprojects {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            from components.java
+
             def jarName = createArtifactName()
+
             artifact(jarName)
         }
     }
 }
 
 artifactory {
+    contextUrl = 'http://localhost:8082/artifactory' // URL of your Artifactory server
     publish {
-        defaults { publications('mavenJava') }
+        repository {
+            repoKey = 'bds-integrations-snapshot' // The key of the repository in Artifactory
+            username = 'admin'
+            password = 'aA1234567'
+            maven = true // Use Maven layout
+        }
+        defaults {
+            publications('mavenJava')
+            publishArtifacts = true // Publish artifacts to Artifactory
+        }
     }
 }
 
@@ -121,6 +144,7 @@ test {
     testLogging {
         exceptionFormat = 'full'
     }
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -336,5 +360,5 @@ task submitToPlatform1(type: Exec, dependsOn: [buildPlatform1]) {
     args = ["./submit.sh"]
 }
 
-artifactoryPublish.dependsOn ':documentation:publishDitaSource'
-artifactoryPublish.dependsOn signJar
+// artifactoryPublish.dependsOn ':documentation:publishDitaSource'
+// artifactoryPublish.dependsOn signJar

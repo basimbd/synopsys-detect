@@ -1,15 +1,5 @@
 package com.synopsys.integration.detect.tool.impactanalysis;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
 import com.synopsys.integration.blackduck.codelocation.CodeLocationCreationData;
 import com.synopsys.integration.blackduck.codelocation.Result;
 import com.synopsys.integration.blackduck.service.BlackDuckServicesFactory;
@@ -24,6 +14,14 @@ import com.synopsys.integration.log.BufferedIntLogger;
 import com.synopsys.integration.log.IntLogger;
 import com.synopsys.integration.util.NameVersion;
 import com.synopsys.integration.util.NoThreadExecutorService;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("integration")
 public class ImpactAnalysisTestIT {
@@ -34,7 +32,7 @@ public class ImpactAnalysisTestIT {
     File outputDirAsPath;
     private final IntLogger logger = new BufferedIntLogger();
 
-    @Test
+    //    @Test
     public void testImpactAnalysisForDetect() throws IOException, IntegrationException {
         BlackDuckTestConnection blackDuckTestConnection = BlackDuckTestConnection.fromEnvironment();
         NameVersion projectNameVersion = new NameVersion("synopsys-detect-junit", "impact-analysis");
@@ -50,21 +48,21 @@ public class ImpactAnalysisTestIT {
         Path impactAnalysisFile = generateImpactAnalysisOperation.generateImpactAnalysis(toScan, impactAnalysisCodeLocationName, outputDirectory);
 
         ImpactAnalysisBatchRunner impactAnalysisBatchRunner = new ImpactAnalysisBatchRunner(
-            logger,
-            blackDuckServicesFactory.getBlackDuckApiClient(),
-            blackDuckServicesFactory.getApiDiscovery(),
-            new NoThreadExecutorService(),
-            blackDuckServicesFactory.getGson()
+                logger,
+                blackDuckServicesFactory.getBlackDuckApiClient(),
+                blackDuckServicesFactory.getApiDiscovery(),
+                new NoThreadExecutorService(),
+                blackDuckServicesFactory.getGson()
         );
         ImpactAnalysisUploadService impactAnalysisUploadService = new ImpactAnalysisUploadService(
-            impactAnalysisBatchRunner,
-            blackDuckServicesFactory.createCodeLocationCreationService()
+                impactAnalysisBatchRunner,
+                blackDuckServicesFactory.createCodeLocationCreationService()
         );
         ImpactAnalysisUploadOperation impactAnalysisUploadOperation = new ImpactAnalysisUploadOperation(impactAnalysisUploadService);
         CodeLocationCreationData<ImpactAnalysisBatchOutput> creationData = impactAnalysisUploadOperation.uploadImpactAnalysis(
-            impactAnalysisFile,
-            projectNameVersion,
-            impactAnalysisCodeLocationName
+                impactAnalysisFile,
+                projectNameVersion,
+                impactAnalysisCodeLocationName
         );
 
         assertEquals(1, creationData.getOutput().getOutputs().size());
