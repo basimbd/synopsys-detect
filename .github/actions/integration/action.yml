@@ -5,4 +5,4 @@ runs:
   steps:
     - name: Integration Tests with Gradle
       shell: powershell
-      run: ./gradlew clean build -Ptags=integration
+      run: ./gradlew clean build -Ptags=integration artifactoryPublish --refresh-dependencies
