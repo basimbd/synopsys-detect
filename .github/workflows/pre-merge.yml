@@ -34,4 +34,4 @@ jobs:
 
       - name: Build and run battery, unit, and functional tests
         run: |
-          ./gradlew clean build -Ptags="battery,unit,functional" -Pversion="${{github.event.number}}-SNAPSHOT" artifactoryPublish
+          ./gradlew clean build -Ptags="battery,unit,functional" -PpullReqNum="${{github.event.number}}" artifactoryPublish
