@@ -21,6 +21,9 @@ buildscript {
 
 group = 'com.synopsys.integration'
 version = '9.0.0-SIGQA6'
+if (project.hasProperty('pullReqNum')) {
+    version = version.split('-')[0] + '-' + pullReqNum + '-SNAPSHOT'
+}
 
 apply plugin: 'com.synopsys.integration.solution'
 apply plugin: 'org.springframework.boot'
@@ -144,7 +147,6 @@ test {
     testLogging {
         exceptionFormat = 'full'
     }
-    useJUnitPlatform()
 }
 
 dependencies {
