@@ -57,31 +57,31 @@ println "======================\n${project.property("version")}\n===============
 repositories {
     println "Checking if environment property SNPS_INTERNAL_ARTIFACTORY is configured: ${internalRepoHost}"
 
-//    maven {
-//        url = uri("${internalRepoHost}/artifactory/bds-integrations-release")
-//        content { includeModule(locatorGroup, locatorModule) }
-//        allowInsecureProtocol = true
-//    }
+    maven {
+        url = uri("${internalRepoHost}/artifactory/bds-integrations-release")
+        content { includeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
+    }
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integrations-snapshot")
         content { includeModule(locatorGroup, locatorModule) }
         allowInsecureProtocol = true
     }
-//    maven {
-//        url = uri("${internalRepoHost}/artifactory/bds-integration-placeholder-release")
-//        content { includeModule(locatorGroup, locatorModule) }
-//        allowInsecureProtocol = true
-//    }
-//    maven {
-//        url = uri("${externalRepoHost}/artifactory/bds-integration-placeholder-release")
-//        content { includeModule(locatorGroup, locatorModule) }
-//        allowInsecureProtocol = true
-//    }
-//    maven {
-//        url "${externalRepoHost}/bds-bdio-release"
-//        content { excludeModule(locatorGroup, locatorModule) }
-//        allowInsecureProtocol = true
-//    }
+    maven {
+        url = uri("${internalRepoHost}/artifactory/bds-integration-placeholder-release")
+        content { includeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
+    }
+    maven {
+        url = uri("${externalRepoHost}/artifactory/bds-integration-placeholder-release")
+        content { includeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
+    }
+    maven {
+        url "${externalRepoHost}/bds-bdio-release"
+        content { excludeModule(locatorGroup, locatorModule) }
+        allowInsecureProtocol = true
+    }
 }
 
 tasks.named("bootJar") {
@@ -139,22 +139,6 @@ artifactory {
         }
     }
 }
-
-//artifactory {
-//    contextUrl = 'http://localhost:8082/artifactory' // URL of your Artifactory server
-//    publish {
-//        repository {
-//            repoKey = 'bds-integrations-snapshot' // The key of the repository in Artifactory
-//            username = 'admin'
-//            password = 'aA1234567'
-//            maven = true // Use Maven layout
-//        }
-//        defaults {
-//            publications('mavenJava') // The name of the publication you want to publish
-//            publishArtifacts = true // Publish artifacts to Artifactory
-//        }
-//    }
-//}
 
 test {
     testLogging {

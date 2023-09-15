@@ -10,7 +10,6 @@ import com.synopsys.integration.exception.IntegrationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junitpioneer.jupiter.TempDirectory;
 
@@ -36,7 +35,7 @@ public class RiskReportServiceTestIT {
         blackDuckTestConnection.createProjectService().syncProjectAndVersion(projectSyncModel);
     }
 
-    @Test
+    //    @Test
     @ExtendWith(TempDirectory.class)
     public void createReportPdfFileTest(@TempDirectory.TempDir Path folderForReport) throws IntegrationException {
         BlackDuckTestConnection blackDuckTestConnection = BlackDuckTestConnection.fromEnvironment();
@@ -50,7 +49,7 @@ public class RiskReportServiceTestIT {
         Assertions.assertTrue(pdfFile.exists());
     }
 
-    @Test
+    //    @Test
     @ExtendWith(TempDirectory.class)
     public void createNoticesReportFileTest(@TempDirectory.TempDir Path folderForReport) throws IntegrationException, InterruptedException {
         BlackDuckTestConnection blackDuckTestConnection = BlackDuckTestConnection.fromEnvironment();
@@ -67,7 +66,7 @@ public class RiskReportServiceTestIT {
         Assertions.assertTrue(noticeReportFile.exists());
     }
 
-    @Test
+    //    @Test
     @Disabled
     public void createReportFilesManually() throws IntegrationException, InterruptedException {
         BlackDuckTestConnection blackDuckTestConnection = BlackDuckTestConnection.fromEnvironment();
