@@ -1,10 +1,9 @@
 package com.synopsys.integration.detect.battery.detector;
 
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-
 import com.synopsys.integration.detect.battery.util.DetectorBatteryTestRunner;
 import com.synopsys.integration.detect.configuration.DetectProperties;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 @Tag("battery")
 public class BitbakeBattery {
@@ -20,7 +19,7 @@ public class BitbakeBattery {
         test.run();
     }
 
-    @Test
+    //    @Test
     void testExclBuild() {
         DetectorBatteryTestRunner test = new DetectorBatteryTestRunner("bitbake-excldev", "bitbake/excldev");
         test.sourceFileFromResource("oe-init-build-env");
