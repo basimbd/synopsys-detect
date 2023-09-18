@@ -11,6 +11,7 @@ jobs:
       - uses: ./.github/actions/remove-snapshot
 
   gradle-qa-build:
+    needs: remove-snapshot
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
