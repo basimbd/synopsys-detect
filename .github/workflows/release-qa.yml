@@ -9,3 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/remove-snapshot
+
+  gradle-qa-build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup
+
+      - run: |
+          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqa.build=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
