@@ -22,8 +22,10 @@ jobs:
           ./gradlew qaJaloja
 
       - name: New Version
+        id: new_version
+        shell: bash
         run: |
-          ./gradlew properties -q | findstr '^version: '
+          echo "PROJ_VER=$(./gradlew properties -q | grep -oP '^version: \K.*')" >> $GITHUB_OUTPUT
 
       - uses: EndBug/add-and-commit@v9
         with:
@@ -37,7 +39,7 @@ jobs:
           # - github_actions -> github-actions <email associated with the github logo>
           # Default: github_actor
           default_author: github_actions
-          message: 'Release 9.0.0-SIGQA7'
+          message: Release ${{ steps.new_version.outputs.PROJ_VER }}
 
           # The way the action should handle pathspec errors from the add and remove commands. Three options are available:
           # - ignore -> errors will be logged but the step won't fail
