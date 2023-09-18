@@ -1,6 +1,7 @@
 name: Release-QA Workflow
 
 on: workflow_dispatch
+permissions: write-all
 jobs:
   remove-snapshot:
     runs-on: self-hosted
