@@ -8,19 +8,23 @@ runs:
     - uses: ./.github/actions/setup
 
     - name: Checking snapshot dependencies
+      shell: bash
       run: |
         ./gradlew dependencies -q --configuration implementation
 
     - name: Current Version
+      shell: bash
       run: |
         ./gradlew properties -q | grep '^version: '
 
     - name: Updating Version
+      shell: bash
       run: |
         ./gradlew qaJaloja
 
     - name: New Version
       id: new_version
+      shell: bash
       run: |
         echo "PROJ_VER=$(./gradlew properties -q | grep -oP '^version: \K.*')" >> $GITHUB_OUTPUT
         echo ${{ steps.new_version.outputs.PROJ_VER }}
