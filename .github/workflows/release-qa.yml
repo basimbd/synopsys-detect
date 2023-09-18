@@ -23,9 +23,9 @@ jobs:
 
       - name: New Version
         id: new_version
-        shell: bash
+        shell: powershell
         run: |
-          echo "PROJ_VER=$(./gradlew properties -q | grep -oP '^version: \K.*')" >> $GITHUB_OUTPUT
+          wsl | echo "PROJ_VER=$(./gradlew properties -q | grep -oP '^version: \K.*')" >> $GITHUB_OUTPUT
 
       - uses: EndBug/add-and-commit@v9
         with:
