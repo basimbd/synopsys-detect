@@ -1,0 +1,35 @@
+name: 'Next Snapshot'
+description: 'Increments project version and appends `-SNAPSHOT`.'
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/actions/setup
+
+    - name: Current Version
+      shell: bash
+      run: |
+        ./gradlew properties -q | grep '^version: '
+
+    - name: Post Release updating Version
+      shell: bash
+      run: |
+        ./gradlew snapshotJaloja
+
+    - name: Using next Version post release
+      id: new_version
+      shell: bash
+      run: |
+        echo "PROJ_VER=$(./gradlew properties -q | grep -oP '^version: \K.*')" >> $GITHUB_OUTPUT
+        echo ${{ steps.new_version.outputs.PROJ_VER }}
+
+    - uses: EndBug/add-and-commit@v9
+      with:
+        add: '.'
+
+        default_author: github_actions
+        message: Using the next snapshot post release ${{ steps.new_version.outputs.PROJ_VER }}
+
+        pathspec_error_handling: ignore
+        push: true
