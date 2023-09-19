@@ -20,7 +20,7 @@ buildscript {
 }
 
 group = 'com.synopsys.integration'
-version = '9.0.0-SIGQA12'
+version = '9.0.0-SIGQA13'
 if (project.hasProperty('pullReqNum')) {
     version = version.split('-')[0] + '-' + pullReqNum + '-SNAPSHOT'
 }
