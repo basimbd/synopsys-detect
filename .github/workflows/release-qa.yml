@@ -18,4 +18,4 @@ jobs:
       - uses: ./.github/actions/setup
 
       - run: |
-          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqa.build=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
+          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqabuild=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
