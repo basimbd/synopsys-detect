@@ -19,6 +19,15 @@ jobs:
   #
   #      - run: |
   #          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqabuild=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
+
+  archive:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/upload-artifact@v3
+        with:
+          retention-days: 1
+
   next-snapshot:
     needs: remove-snapshot
     runs-on: [ self-hosted, linux ]
