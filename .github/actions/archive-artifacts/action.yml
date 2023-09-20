@@ -1,0 +1,19 @@
+name: 'Archive build artifacts'
+description: 'uploads the build artifacts into github.'
+
+runs:
+  using: composite
+  steps:
+    #    - uses: actions/checkout@v3
+    #      with:
+    #        ref: ${{ github.ref }}
+    #    - uses: ./.github/actions/setup
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: |
+          ${{ github.workspace }}/**/build/libs/*.jar
+          ${{ github.workspace }}/**/build/distributions/*.zip
+          ${{ github.workspace }}/**/distributions/*.tgz
+          ${{ github.workspace }}/**/build/libs/*.hpi
+        retention-days: 1

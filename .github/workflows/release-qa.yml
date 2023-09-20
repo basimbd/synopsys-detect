@@ -10,32 +10,20 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/remove-snapshot
 
-  #  gradle-qa-build:
-  #    needs: remove-snapshot
-  #    runs-on: self-hosted
-  #    steps:
-  #      - uses: actions/checkout@v3
-  #      - uses: ./.github/actions/setup
-  #
-  #      - run: |
-  #          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqabuild=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
-
-  archive:
+  gradle-qa-build:
     needs: remove-snapshot
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions: write-all
     steps:
-      - uses: actions/upload-artifact@v3
-        with:
-          path: |
-            ${{ github.workspace }}/**/build/libs/*.jar
-            ${{ github.workspace }}/**/build/distributions/*.zip
-            ${{ github.workspace }}/**/distributions/*.tgz
-            ${{ github.workspace }}/**/build/libs/*.hpi
-          retention-days: 1
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup
+      - run: |
+          ./gradlew clean build
+      #          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqabuild=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
+      - uses: ./.github/actions/archive-artifacts
 
   next-snapshot:
-    needs: remove-snapshot
+    needs: gradle-qa-build
     runs-on: [ self-hosted, linux ]
     permissions: write-all
     steps:
