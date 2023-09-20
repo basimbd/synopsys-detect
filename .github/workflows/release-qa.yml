@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/upload-artifact@v3
         with:
-          path: ${{ github.workspace }}/artifact/**/*
+          path: '**/build/libs/*.jar', '**/build/distributions/*.zip', '**/distributions/*.tgz', '**/build/libs/*.hpi'
           retention-days: 1
 
   next-snapshot:
