@@ -9,8 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
+      - uses: actions/checkout@v3
       - name: build project
         run: |
+          pwd
           ./gradlew clean build
       - uses: actions/upload-artifact@v3
         with:
