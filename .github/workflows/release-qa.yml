@@ -26,6 +26,7 @@ jobs:
     steps:
       - uses: actions/upload-artifact@v3
         with:
+          path: ${{ github.workspace }}/artifact/**/*
           retention-days: 1
 
   next-snapshot:
