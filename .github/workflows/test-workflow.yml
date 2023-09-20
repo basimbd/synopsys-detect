@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
+      - name: build project
+        run: |
+          ./gradlew clean build
       - uses: actions/upload-artifact@v3
         with:
           path: |
