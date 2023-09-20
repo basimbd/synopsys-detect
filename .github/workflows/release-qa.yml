@@ -21,6 +21,7 @@ jobs:
   #          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqabuild=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
 
   archive:
+    needs: remove-snapshot
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
