@@ -17,5 +17,8 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           path: |
-            ${{ github.workspace }}/build/libs/*.jar
+            ${{ github.workspace }}/**/build/libs/*.jar
+            ${{ github.workspace }}/**/build/distributions/*.zip
+            ${{ github.workspace }}/**/distributions/*.tgz
+            ${{ github.workspace }}/**/build/libs/*.hpi
           retention-days: 1
