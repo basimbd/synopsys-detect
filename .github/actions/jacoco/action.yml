@@ -1,0 +1,16 @@
+name: 'Jacoco'
+description: 'Run Jacoco to generate a test coverage report.'
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.ref }}
+    - uses: ./.github/actions/setup
+
+    - name: Add Jacoco Test Coverage
+      uses: madrapps/jacoco-report@v1.6.1
+      with:
+        paths: ${{ github.workspace }}/**/build/test-results/**/*.xml
+        token: ${{ secrets.GITHUB_TOKEN }}

@@ -8,15 +8,4 @@ jobs:
     permissions: write-all
     steps:
       - uses: actions/checkout@v3
-      - name: build project
-        run: |
-          pwd
-          ./gradlew clean build
-      - uses: actions/upload-artifact@v3
-        with:
-          path: |
-            ${{ github.workspace }}/**/build/libs/*.jar
-            ${{ github.workspace }}/**/build/distributions/*.zip
-            ${{ github.workspace }}/**/distributions/*.tgz
-            ${{ github.workspace }}/**/build/libs/*.hpi
-          retention-days: 1
+      - uses: ./.github/actions/jacoco
