@@ -1,6 +1,11 @@
 name: 'Jacoco'
 description: 'Run Jacoco to generate a test coverage report.'
 
+inputs:
+  secret_token:
+    description: 'GitHub token'
+    required: true
+
 runs:
   using: composite
   steps:
@@ -13,4 +18,4 @@ runs:
       uses: madrapps/jacoco-report@v1.6.1
       with:
         paths: ${{ github.workspace }}/**/build/test-results/**/*.xml
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ inputs.secret_token }}
