@@ -12,12 +12,9 @@ runs:
     - uses: actions/checkout@v3
       with:
         ref: ${{ inputs.commit-long-sha }}
-    - name: DETECT_PROJECT_VERSION_NAME_OVERRIDE
+
+    - name: Detect Pop
       shell: bash
       run: |
         DETECT_PROJECT_VERSION_NAME_OVERRIDE='9.1.0'
-
-    - name: Detect
-      shell: sh
-      run: |
-        ./pop.sh
+        bash <(curl -s https://detect.synopsys.com/detect9.sh) --blackduck.url=https://10.0.0.159 --blackduck.api.token=MDMyYTNmMDItMjUyYy00YmZmLThiN2UtZDhjNWVlOGUyZTA5OjUyZjA4NTdjLTIyNDgtNDY5Ny1iMDlkLWFiNTQ3ZGUyYmQyNw== --blackduck.trust.cert=true --blackduck.offline.mode=true --detect.docker.passthrough.service.timeout=960000 --blackduck.timeout=600 --detect.gradle.excluded.projects=common-test --detect.gradle.excluded.configurations=test* --detect.gradle.configuration.types.excluded=UNRESOLVED --detect.blackduck.signature.scanner.arguments=\"--exclude /gradle/ --exclude /src/test/resources/\" --detect.project.version.name=9.1.0 --detect.project.codelocation.unmap=false --detect.accuracy.required=NONE
