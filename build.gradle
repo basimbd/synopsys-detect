@@ -30,6 +30,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'jacoco'
 
 final def resources = new File("${projectDir}/src/main/resources")
 final def versionFile = new File(resources, "version.txt")
@@ -146,6 +147,20 @@ artifactory {
 test {
     testLogging {
         exceptionFormat = 'full'
+    }
+    jacoco {
+        destinationFile = layout.buildDirectory.file('reports/jacoco/jacocoTest.exec').get().asFile
+        classDumpDir = layout.buildDirectory.dir('reports/jacoco/classpathdumps').get().asFile
+    }
+    // finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    // dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
 
