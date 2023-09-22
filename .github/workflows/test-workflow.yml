@@ -18,12 +18,12 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build Project
         run: |
-          ./gradlew clean build
+          ./gradlew clean build -x test
       - name: JaCoCo Code Coverage Report
         id: jacoco_reporter
         uses: PavanMudigonda/jacoco-reporter@v4.8
         with:
-          coverage_results_path: ${{ github.workspace }}/**/build/reports/jacoco/test.xml
+          coverage_results_path: ${{ github.workspace }}/build/reports/jacoco/test.xml
           coverage_report_name: Coverage
           coverage_report_title: JaCoCo
           github_token: ${{ secrets.GITHUB_TOKEN }}
