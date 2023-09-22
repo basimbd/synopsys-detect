@@ -1,16 +1,23 @@
 name: 'Pop Scan'
 description: 'Runs the SCA scan in the repository.'
+
+inputs:
+  commit-long-sha:
+    description: 'If given, git will checkout to this commit and ignore the branch.'
+    required: false
+
 runs:
   using: composite
   steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: commit-long-sha
     - name: DETECT_PROJECT_VERSION_NAME_OVERRIDE
-      shell: powershell
+      shell: bash
       run: |
-        $DETECT_PROJECT_VERSION_NAME_OVERRIDE = '9.1.0'
+        DETECT_PROJECT_VERSION_NAME_OVERRIDE = '9.1.0'
 
     - name: Detect
-      shell: powershell
+      shell: sh
       run: |
-        pushd \\wsl.localhost\Ubuntu-20.04\home\basim\synopsys-detect
-        bash pop.sh
-        popd
+        ./pop.sh

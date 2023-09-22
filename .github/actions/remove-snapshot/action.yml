@@ -30,6 +30,7 @@ runs:
         echo ${{ steps.new_version.outputs.PROJ_VER }}
 
     - uses: EndBug/add-and-commit@v9
+      id: release_commit
       with:
         add: '.'
 
@@ -38,3 +39,5 @@ runs:
 
         pathspec_error_handling: ignore
         push: true
+      env:
+        RELEASE_COMMIT_HASH: ${{ steps.release_commit.outputs.commit_long_sha }}
