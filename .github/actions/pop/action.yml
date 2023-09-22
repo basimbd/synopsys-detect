@@ -11,7 +11,7 @@ runs:
   steps:
     - uses: actions/checkout@v3
       with:
-        ref: commit-long-sha
+        ref: ${{ inputs.commit-long-sha }}
     - name: DETECT_PROJECT_VERSION_NAME_OVERRIDE
       shell: bash
       run: |
