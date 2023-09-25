@@ -1,0 +1,33 @@
+name: Post Merge Workflow
+
+on:
+  push:
+    branches:
+      - master
+      - '[0-9]+.[0-9]+.z'
+      - '[0-9]+.[0-9]+.0'
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: ./.github/actions/java-11-setup
+      - name: Integration Tests
+        uses: ./.github/actions/integration
+
+  pop:
+    runs-on: [ self-hosted, linux ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pop
+        with:
+          commit-long-sha: ${{ github.ref }}
+        env:
+          BLACKDUCK_URL: ${{ vars.BLACKDUCK_URL }}
+          BLACKDUCK_API_TOKEN: ${{ secrets.BLACKDUCK_API_TOKEN }}
