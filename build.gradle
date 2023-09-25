@@ -54,9 +54,7 @@ def createBatteryPath() {
 def final locatorGroup = "com.synopsys.integration"
 def final locatorModule = "component-locator"
 final def externalRepoHost = "https://sig-repo.synopsys.com"
-final def internalRepoHost = "http://localhost:8082" //System.getenv('SNPS_INTERNAL_ARTIFACTORY')
-
-println "======================\n${project.property("version")}\n======================"
+final def internalRepoHost = System.getenv('SNPS_INTERNAL_ARTIFACTORY')
 
 repositories {
     println "Checking if environment property SNPS_INTERNAL_ARTIFACTORY is configured: ${internalRepoHost}"
@@ -129,12 +127,12 @@ publishing {
 }
 
 artifactory {
-    contextUrl = 'http://localhost:8082/artifactory' // URL of your Artifactory server
+    contextUrl = internalRepoHost + '/artifactory' // URL of your Artifactory server
     publish {
         repository {
             repoKey = 'bds-integrations-snapshot' // The key of the repository in Artifactory
-            username = 'admin'
-            password = 'aA1234567'
+            username = System.getenv('ARTIFACTORY_DEPLOYER_USER')
+            password = System.getenv('ARTIFACTORY_DEPLOYER_PASSWORD')
             maven = true // Use Maven layout
         }
         defaults {
