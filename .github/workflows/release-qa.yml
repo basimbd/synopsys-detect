@@ -3,38 +3,39 @@ name: Release-QA Workflow
 on: workflow_dispatch
 
 jobs:
-  remove-snapshot:
-    runs-on: [ self-hosted, linux ]
-    permissions: write-all
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/remove-snapshot
+  #  remove-snapshot:
+  #    runs-on: [ self-hosted, linux ]
+  #    permissions: write-all
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #      - uses: ./.github/actions/remove-snapshot
 
-  gradle-qa-build:
-    needs: remove-snapshot
-    runs-on: self-hosted
-    permissions: write-all
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup
-      - run: |
-          ./gradlew clean build
-      #          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqabuild=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
-      - uses: ./.github/actions/archive-artifacts
-
-  next-snapshot:
-    needs: gradle-qa-build
-    runs-on: [ self-hosted, linux ]
-    permissions: write-all
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/next-snapshot
+  #  gradle-qa-build:
+  #    needs: remove-snapshot
+  #    runs-on: self-hosted
+  #    permissions: write-all
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #      - uses: ./.github/actions/setup
+  #      - run: |
+  #          ./gradlew clean build
+  #      #          ./gradlew clean build createAirGapZip createAirGapZipWithoutDocker artifactoryPublish publishAirGapZip publishAirGapZipWithoutDocker -Pqabuild=true -PartifactoryRepo=bds-integrations-test --refresh-dependencies --stacktrace --info
+  #      - uses: ./.github/actions/archive-artifacts
+  #
+  #  next-snapshot:
+  #    needs: gradle-qa-build
+  #    runs-on: [ self-hosted, linux ]
+  #    permissions: write-all
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #      - uses: ./.github/actions/next-snapshot
 
   pop:
-    needs: remove-snapshot
+    #    needs: remove-snapshot
     runs-on: [ self-hosted, linux ]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pop
         with:
-          commit-long-sha: ${{ env.RELEASE_COMMIT_HASH }}
+          commit-long-sha: ${{ github.ref }}
+#          commit-long-sha: ${{ env.RELEASE_COMMIT_HASH }}
