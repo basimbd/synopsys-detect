@@ -20,7 +20,6 @@ buildscript {
 }
 
 group = 'com.synopsys.integration'
-
 version = '9.1.0-SIGQA5-SNAPSHOT'
 
 apply plugin: 'com.synopsys.integration.solution'
