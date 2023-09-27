@@ -1,5 +1,5 @@
-name: 'Setup Action'
-description: 'Sets up Github And JDK'
+name: 'Java 11 Setup'
+description: 'Sets up JDK 11 in the working machine.'
 runs:
   using: composite
   steps:

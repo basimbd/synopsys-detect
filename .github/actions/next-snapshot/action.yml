@@ -7,7 +7,7 @@ runs:
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.ref }}
-    - uses: ./.github/actions/setup
+    - uses: ./.github/actions/java-11-setup
 
     - name: Current Version
       shell: bash
