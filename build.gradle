@@ -20,17 +20,11 @@ buildscript {
 }
 
 group = 'com.synopsys.integration'
-version = '9.0.0-SIGQA24'
-if (project.hasProperty('pullReqNum')) {
-    version = version.split('-')[0] + '-' + pullReqNum + '-SNAPSHOT'
-}
+version = '9.1.0-SIGQA6-SNAPSHOT'
 
 apply plugin: 'com.synopsys.integration.solution'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.artifactory'
-apply plugin: 'jacoco'
 
 final def resources = new File("${projectDir}/src/main/resources")
 final def versionFile = new File(resources, "version.txt")
@@ -58,7 +52,6 @@ final def internalRepoHost = System.getenv('SNPS_INTERNAL_ARTIFACTORY')
 
 repositories {
     println "Checking if environment property SNPS_INTERNAL_ARTIFACTORY is configured: ${internalRepoHost}"
-
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integrations-release")
         content { includeModule(locatorGroup, locatorModule) }
@@ -117,48 +110,21 @@ allprojects {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
-
             def jarName = createArtifactName()
-
             artifact(jarName)
         }
     }
 }
 
 artifactory {
-    contextUrl = internalRepoHost + '/artifactory' // URL of your Artifactory server
     publish {
-        repository {
-            repoKey = 'bds-integrations-snapshot' // The key of the repository in Artifactory
-            username = System.getenv('ARTIFACTORY_DEPLOYER_USER')
-            password = System.getenv('ARTIFACTORY_DEPLOYER_PASSWORD')
-            maven = true // Use Maven layout
-        }
-        defaults {
-            publications('mavenJava')
-            publishArtifacts = true // Publish artifacts to Artifactory
-        }
+        defaults { publications('mavenJava') }
     }
 }
 
 test {
     testLogging {
         exceptionFormat = 'full'
-    }
-    jacoco {
-        destinationFile = layout.buildDirectory.file('reports/jacoco/jacocoTest.exec').get().asFile
-        classDumpDir = layout.buildDirectory.dir('reports/jacoco/classpathdumps').get().asFile
-    }
-    // finalizedBy jacocoTestReport // report is always generated after tests run
-}
-
-jacocoTestReport {
-    // dependsOn test // tests are required to run before generating the report
-    reports {
-        xml.required = true
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
 
@@ -170,10 +136,10 @@ dependencies {
 
     implementation 'ch.qos.logback:logback-classic:1.2.11'
 
-    implementation 'com.esotericsoftware.yamlbeans:yamlbeans:1.11'
+    implementation 'com.blackducksoftware.bdio:bdio-protobuf:3.2.6'
     implementation "com.synopsys.integration:blackduck-common:${blackDuckCommonVersion}"
     implementation 'com.synopsys:method-analyzer-core:0.2.0'
-    implementation "${locatorGroup}:${locatorModule}:1.0.15"
+    implementation "${locatorGroup}:${locatorModule}:1.0.16"
 
     implementation 'org.apache.maven.shared:maven-invoker:3.0.0'
     implementation "org.springframework.boot:spring-boot"
@@ -188,7 +154,7 @@ dependencies {
 
     testImplementation project(':configuration').sourceSets.test.output
     testImplementation project(':common-test')
-    testImplementation 'com.github.docker-java:docker-java-core:3.2.7'
+    testImplementation 'com.github.docker-java:docker-java-core:3.2.13'
     testImplementation 'com.github.docker-java:docker-java-transport-httpclient5:3.3.0'
 }
 
@@ -245,7 +211,7 @@ task signJar() {
 }
 
 task createAirGapZip(type: JavaExec) {
-    // dependsOn signJar
+    dependsOn signJar
 
     classpath = files(createArtifactName())
     classpath += sourceSets.main.runtimeClasspath
@@ -271,7 +237,7 @@ task publishAirGapZip() {
 }
 
 task createAirGapZipWithoutDocker(type: JavaExec) {
-    // dependsOn signJar
+    dependsOn signJar
 
     classpath = files(createArtifactName())
     classpath += sourceSets.main.runtimeClasspath
@@ -298,7 +264,7 @@ task publishAirGapZipWithoutDocker() {
 }
 
 task verifyJar() {
-    // dependsOn signJar
+    dependsOn signJar
     doLast {
         exec {
             // returns 0 if successfully verified as signed; non-0 if not
@@ -375,5 +341,5 @@ task submitToPlatform1(type: Exec, dependsOn: [buildPlatform1]) {
     args = ["./submit.sh"]
 }
 
-// artifactoryPublish.dependsOn ':documentation:publishDitaSource'
-// artifactoryPublish.dependsOn signJar
+artifactoryPublish.dependsOn ':documentation:publishDitaSource'
+artifactoryPublish.dependsOn signJar
