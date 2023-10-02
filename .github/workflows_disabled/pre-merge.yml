@@ -25,6 +25,6 @@ jobs:
       - name: Set up JDK 11
         uses: ./.github/actions/java-11-setup
 
-      - name: Build, run battery, unit, and functional tests, and publish artifacts
+      - name: Build project, run battery, unit, and functional tests, and publish artifacts
         run: |
           ./gradlew clean build -Ptags="battery,unit,functional" -PpullReqNum="${{github.event.number}}" artifactoryPublish
