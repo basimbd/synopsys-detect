@@ -21,6 +21,8 @@ buildscript {
 
 group = 'com.synopsys.integration'
 version = '9.1.0-SIGQA6-SNAPSHOT'
+if (project.hasProperty('pullReqNum'))
+    version = version.split('-')[0] + '-' + pullReqNum + '-SNAPSHOT'
 
 apply plugin: 'com.synopsys.integration.solution'
 apply plugin: 'org.springframework.boot'
