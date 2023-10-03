@@ -1,5 +1,5 @@
 name: 'Archive build artifacts'
-description: 'uploads the build artifacts into github.'
+description: 'Uploads the build artifacts into GitHub.'
 
 runs:
   using: composite
