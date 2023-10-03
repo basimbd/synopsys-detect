@@ -26,4 +26,6 @@ runs:
         --detect.gradle.excluded.configurations=test*
         --detect.gradle.configuration.types.excluded=UNRESOLVED
         --detect.blackduck.signature.scanner.arguments=\"--exclude /gradle/ --exclude /src/test/resources/\"
-        --detect.project.version.name=9.1.0 --detect.project.codelocation.unmap=false --detect.accuracy.required=NONE
+        --detect.project.version.name=9.1.0
+        --detect.project.codelocation.unmap=false
+        --detect.accuracy.required=NONE
