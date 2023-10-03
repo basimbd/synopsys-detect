@@ -57,27 +57,22 @@ repositories {
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integrations-release")
         content { includeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integrations-snapshot")
         content { includeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integration-placeholder-release")
         content { includeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
     maven {
         url = uri("${externalRepoHost}/artifactory/bds-integration-placeholder-release")
         content { includeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
     maven {
         url "${externalRepoHost}/bds-bdio-release"
         content { excludeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
 }
 
