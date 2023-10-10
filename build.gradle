@@ -343,5 +343,5 @@ task submitToPlatform1(type: Exec, dependsOn: [buildPlatform1]) {
     args = ["./submit.sh"]
 }
 
-artifactoryPublish.dependsOn ':documentation:publishDitaSource'
-artifactoryPublish.dependsOn signJar
+//artifactoryPublish.dependsOn ':documentation:publishDitaSource'
+//artifactoryPublish.dependsOn signJar
