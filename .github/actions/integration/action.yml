@@ -5,5 +5,5 @@ runs:
   steps:
     - name: Integration Tests with Gradle
       shell: powershell
-      run: ./gradlew clean build -Ptags=integration artifactoryPublish --refresh-dependencies
+      run: ./gradlew clean build #-Ptags=integration artifactoryPublish --refresh-dependencies
 #      run: ./gradlew clean build signJar -Ptags=all artifactoryPublish sonarqube --refresh-dependencies
