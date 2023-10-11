@@ -3,7 +3,15 @@ description: 'Runs the Integration Tests in the repository.'
 runs:
   using: composite
   steps:
-    - name: Integration Tests with Gradle
+    - if: ${{ endsWith( github.ref, 'master' ) }}
+      name: Integration Tests with Gradle and Sonar Cloud Scan
       shell: powershell
-      run: ./gradlew clean build #-Ptags=integration artifactoryPublish --refresh-dependencies
+      run: |
+        echo "This has Sonar Cloud."
+          ./gradlew clean build
+    - if: ${{ !endsWith( github.ref, 'master' ) }}
+      name: Integration Tests with Gradle
+      shell: powershell
+      run: ./gradlew clean build
+#-Ptags=integration artifactoryPublish --refresh-dependencies
 #      run: ./gradlew clean build signJar -Ptags=all artifactoryPublish sonarqube --refresh-dependencies
