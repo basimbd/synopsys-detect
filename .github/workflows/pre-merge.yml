@@ -19,11 +19,8 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set up JDK 11
-        uses: ./.github/actions/java-11-setup
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/java-11-setup
 
       - name: Build project, run battery, unit, and functional tests, and publish artifacts
         run: |

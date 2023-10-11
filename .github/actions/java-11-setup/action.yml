@@ -1,4 +1,4 @@
-name: 'Java 11 Setup'
+name: 'Set up JDK 11'
 description: 'Sets up JDK 11 in the working machine.'
 runs:
   using: composite
