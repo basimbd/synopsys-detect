@@ -20,9 +20,10 @@ buildscript {
 }
 
 group = 'com.synopsys.integration'
-version = '9.1.0-SIGQA6-SNAPSHOT'
+
+version = '9.1.0-SNAPSHOT'
 if (project.hasProperty('pullReqNum'))
-    version = version.split('-')[0] + '-' + pullReqNum + '-SNAPSHOT'
+    version = version.replace('-SNAPSHOT', '') + '-' + pullReqNum
 
 apply plugin: 'com.synopsys.integration.solution'
 apply plugin: 'org.springframework.boot'
@@ -57,27 +58,22 @@ repositories {
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integrations-release")
         content { includeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integrations-snapshot")
         content { includeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
     maven {
         url = uri("${internalRepoHost}/artifactory/bds-integration-placeholder-release")
         content { includeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
     maven {
         url = uri("${externalRepoHost}/artifactory/bds-integration-placeholder-release")
         content { includeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
     maven {
         url "${externalRepoHost}/bds-bdio-release"
         content { excludeModule(locatorGroup, locatorModule) }
-        allowInsecureProtocol = true
     }
 }
 
@@ -141,7 +137,7 @@ dependencies {
     implementation 'com.blackducksoftware.bdio:bdio-protobuf:3.2.6'
     implementation "com.synopsys.integration:blackduck-common:${blackDuckCommonVersion}"
     implementation 'com.synopsys:method-analyzer-core:0.2.0'
-    implementation "${locatorGroup}:${locatorModule}:1.0.16"
+    implementation "${locatorGroup}:${locatorModule}:1.0.20"
 
     implementation 'org.apache.maven.shared:maven-invoker:3.0.0'
     implementation "org.springframework.boot:spring-boot"
@@ -343,5 +339,5 @@ task submitToPlatform1(type: Exec, dependsOn: [buildPlatform1]) {
     args = ["./submit.sh"]
 }
 
-//artifactoryPublish.dependsOn ':documentation:publishDitaSource'
-//artifactoryPublish.dependsOn signJar
+artifactoryPublish.dependsOn ':documentation:publishDitaSource'
+artifactoryPublish.dependsOn signJar
