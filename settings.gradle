@@ -7,4 +7,3 @@ include 'common'
 include 'common-test'
 include 'documentation'
 
-includeBuild 'D:\\common-gradle-plugin'
