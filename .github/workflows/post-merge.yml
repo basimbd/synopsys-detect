@@ -14,12 +14,9 @@ jobs:
   integration:
     runs-on: self-hosted
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Set up JDK 11
-        uses: ./.github/actions/java-11-setup
-      - name: Integration Tests
-        uses: ./.github/actions/integration
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/java-11-setup
+      - uses: ./.github/actions/integration
 
 #  pop:
 #    runs-on: [ self-hosted, linux ]
