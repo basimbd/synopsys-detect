@@ -336,7 +336,7 @@ task submitToPlatform1(type: Exec, dependsOn: [buildPlatform1]) {
     executable 'bash'
     environment("RELEASE_VERSION", "${version}")
     environment("BRANCH", branch)
-    environment("REPO1_URL", System.getenv('REPO1_ACCESS_URL'))
+//    environment("REPO1_URL", System.getenv('REPO1_ACCESS_URL'))
     environment("ARTIFACTORY_USERNAME", System.getenv('ARTIFACTORY_DEPLOYER_USER'))
     environment("ARTIFACTORY_PASSWORD", System.getenv('ARTIFACTORY_DEPLOYER_PASSWORD'))
     environment("ARTIFACTORY_HOST", System.getenv('ARTIFACTORY_HOST'))
